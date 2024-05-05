@@ -1,19 +1,19 @@
 # Nessus Basics
 -- The Fundamentals of Vulnerability Management &amp; Remediation --
 
-Tools used:
+Tools I used:
 
-- Oracle VirtualBox (https://www.virtualbox.org/)
+- Oracle VirtualBox (https://www.virtualbox.org/) (Don't recommend this one if you have a license for VMWare, but this is a free option.)
 - Tenable Nessus (https://www.tenable.com/)
 - Virtualized Windows 10 machine. 
 
 Tenable Nessus is a powerful tool used by organizations to keep attack surface to a minimum and ensure all regulatory patches occur. This project goes over the basics of Nessus, comparing credentialed vs. non-credentialed scans, and remediating vulnerabilities.
 
 I created a Windows machine via VirtualBox, then installed Nessus on my local machine. In my VM, I navigated to my Windows Defender Firewall, and ensured my Domain, Private and Public profiles were all turned OFF. This is to ensure that the machine will accept all ICMP (ping) requests. 
-After ensuring connectivity to my VM, I ran a Basic Network scan in Nessus. (NO credentials, nothing added onto the scan.) 
+After ensuring connectivity to my VM, I ran a Basic Network scan in Nessus. (Don't mess with any credentials or other settings yet.) 
 
-I ensured that I selected “Host-only Adapter” in Virtualbox, otherwise Nessus was unable to find my VM, despite being able to ping it from my local machine. 
-After a few minutes, Nessus finished scanning the machine and found 16 vulnerabilities (yours may vary), as well as a CVSS score.
+I ensured that I selected “Host-only Adapter” in Virtualbox, otherwise Nessus was unable to find my VM, despite being able to ping it from my local machine (if you're using a different VM platform, this might not apply to you.)
+After a few minutes, Nessus finished scanning the machine and found 16 vulnerabilities (yours may vary), as well as the CVSS scoring.
 
 
 ![nessus](https://github.com/JerryB0mb/Nessus/assets/49531794/7d41f3c7-789c-428a-80a0-7286a1c4b621)
@@ -25,7 +25,7 @@ Clearly there’s already a predetermined hierarchy of vulnerabilities that Ness
 ![Inkednessus2](https://github.com/JerryB0mb/Nessus/assets/49531794/eda43634-9246-493c-a8cb-aa24ccfba99f)
 
 
-Another one is “**Target Credential Status by Authentication Protocol”,** which is only a result of us not giving Nessus any credentials to the host we’re scanning. 
+Another one is “**Target Credential Status by Authentication Protocol”,** which is merely a result of not giving Nessus any credentials to the host we’re scanning. 
 
 Let’s execute a credentialed scan, and compare results.
 
@@ -63,7 +63,7 @@ You can also go to the Remediations tab, and view all high-level remediation opt
 
 In enterprise/corporate environments, you obviously wouldn’t have to go through each individual vulnerability and remediate them manually. There should and will always be 3rd party options to automate things like OS and software patching, etc.
 
-Let's make this more interesting - for this project, I chose an outdated version of Firefox to install to purposely increase the attack surface of this host. Any old version will do. (DO NOT install an outdated release on your local machine! Make sure you’re doing this in your VM. You can find Mozilla’s archive with the link above.)
+Let's make this more interesting - for this project, I chose an outdated version of Firefox to install to purposely increase the attack surface of this host. Any old version will do. (DO NOT install an outdated release on your local machine! Make sure you’re doing this in your VM. You can find Mozilla’s archive with the link below.)
 
 https://ftp.mozilla.org/pub/firefox/releases/?_gl=1*1ys7kjl*_ga*MTQ1NjM2NDE1Ny4xNzEyNjkxNTY2*_ga_2VC139B3XV*MTcxNDgzODAwOS4xLjAuMTcxNDgzODAwOS4wLjAuMA
 
@@ -73,9 +73,9 @@ Run another scan, and let’s see what we find.
 ![Nessus7](https://github.com/JerryB0mb/Nessus/assets/49531794/e57e75d3-0af7-4064-8812-f848e5fb943d)
 
 
-We have a LOT more vulnerabilities this time. Upon viewing the Vulnerabilities tab, you’d see that there are literally hundreds of vulnerabilities, many are associated with each individual deprecated version of Firefox that are under the latest version. As time goes on, the amount of vulnerabilities this causes will go up, as Firebox gets more updates - of course, if you view the Remediations tab, simply updating Firefox removes a solid amount of these. 
+We have a LOT more vulnerabilities this time. Upon viewing the Vulnerabilities tab, you’d see that there are literally hundreds of vulnerabilities, many are associated with each individual deprecated version of Firefox that are under the latest version. As time goes on, the amount of vulnerabilities this causes will go up, as Firebox gets more updates - of course, if you view the Remediations tab, simply updating Firefox should remove most of these. 
 
-So, let’s do so. Fun fact: open the Run.exe app, and type appwiz.cpl - this takes you directly to the list of programs you have installed (control panel). Uninstall Firefox, then search “Check for updates” in your search bar, and update all that you can. You’ll have to restart the machine at least once to do this. Once again, do another Nessus scan.
+So, let’s do so. Fun fact: open the Run.exe app, and type appwiz.cpl - this takes you directly to the list of programs you have installed (control panel). Uninstall Firefox, then search “Check for updates” in your search bar, and update everything regarding Windows that you can. You’ll have to restart the machine at least once to do this. Once again, do another Nessus scan.
 
 
 ![nessus8](https://github.com/JerryB0mb/Nessus/assets/49531794/55c74cb9-ebc6-4db4-ad45-d004ff106926)
